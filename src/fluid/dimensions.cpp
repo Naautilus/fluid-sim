@@ -1,11 +1,17 @@
-#include "fluid_cell.hpp";
+#include <sstream>
+#include "dimensions.hpp"
+#include "cell.hpp"
 
-double fluid_cell::dimensions::volume() {
+namespace fluid {
+
+double dimensions::volume() {
     return area * length;
 }
-std::string fluid_cell::dimensions::str() {
+std::string dimensions::str() {
     std::ostringstream output;
     output << "area = " << area << " m^2, ";
     output << "length = " << length << " m";
     return output.str();
+}
+
 }

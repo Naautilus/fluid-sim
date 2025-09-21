@@ -1,17 +1,25 @@
-#include "fluid/fluid_cell.hpp"
-#include "fluid/fluid_system.hpp"
+#include "fluid/cell.hpp"
+#include "fluid/system.hpp"
 
 // currently one-dimensional
 
 int main() {
-    fluid_system fluid_system_;
+    fluid::system system_(1.0);
     for (int i = 0; i < 100; i++) {
-        fluid_cell c = fluid_cell(
-            fluid_cell::dimensions{i*0.1, 1.0},
-            fluid_cell::state()
+        fluid::cell c = fluid::cell(
+            fluid::dimensions{1.0, 1.0},
+            fluid::state()
         );
-        fluid_system_.add_cell(c);
+        system_.add_cell(c);
     }
-    fluid_system_.update();
+    system_.cells[0] = std::make_shared<fluid::cell>(fluid::cell(
+        fluid::dimensions{1.0, 1.0},
+        fluid::state{1.0, 1.0, 0.0}
+    ));
+    std::cout << system_.str() << "\n";
+    for (int i = 0; i < 100; i++) {
+        system_.update();
+        std::cout << system_.str() << "\n";
+    }
     std::cout << "hello world\n";
 }

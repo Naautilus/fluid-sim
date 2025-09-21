@@ -1,26 +1,40 @@
-#include "fluid_cell.hpp";
+#include <sstream>
+#include "dimensions.hpp"
+#include "cell.hpp"
 
-std::string fluid_cell::state::str() {
+namespace fluid {
+
+std::string state::str() {
     std::ostringstream output;
     output << "m = " << mass << " kg, ";
-    output << "v = " << momentum / mass << " m/s, ";
-    output << "T = " << thermal_energy / mass << " K";
+    output << "v = " << velocity() << " m/s, ";
+    output << "T = " << temperature() << " K";
     return output.str();
 }
-void fluid_cell::state::operator+=(const state& other) {
+double state::velocity() {
+    if (mass == 0) return 0;
+    return momentum / mass;
+}
+double state::temperature() {
+    if (mass == 0) return 0;
+    return thermal_energy / mass;
+}
+void state::operator+=(const state& other) {
     mass += other.mass;
     momentum += other.momentum;
     thermal_energy += other.thermal_energy;
 }
-void fluid_cell::state::operator-=(const state& other) {
+void state::operator-=(const state& other) {
     mass -= other.mass;
     momentum -= other.momentum;
     thermal_energy -= other.thermal_energy;
 }
-fluid_cell::state fluid_cell::state::operator*(const double& num) {
+state state::operator*(const double& num) {
     state output;
     output.mass = mass * num;
     output.momentum = momentum * num;
     output.thermal_energy = thermal_energy * num;
     return output;
+}
+
 }
