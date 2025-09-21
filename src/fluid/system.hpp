@@ -13,6 +13,7 @@ struct system {
     void add_cell(cell c, std::vector<std::shared_ptr<cell>> attach_low, std::vector<std::shared_ptr<cell>> attach_high);
     void add_cell(cell c);
     bool valid_index(size_t index);
+    std::string str(double minimum, double maximum);
     std::string str();
 };
 

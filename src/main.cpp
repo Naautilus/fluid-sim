@@ -12,14 +12,12 @@ int main() {
         );
         system_.add_cell(c);
     }
-    system_.cells[0] = std::make_shared<fluid::cell>(fluid::cell(
-        fluid::dimensions{1.0, 1.0},
-        fluid::state{1.0, 1.0, 0.0}
-    ));
-    std::cout << system_.str() << "\n";
+    system_.cells[0]->state_ = fluid::state{1.0, 2.0, 0.0};
+    system_.cells[99]->state_ = fluid::state{1.0, -2.0, 0.0};
+    std::cout << system_.str(0.0, 1.0) << "\n";
     for (int i = 0; i < 100; i++) {
         system_.update();
-        std::cout << system_.str() << "\n";
+        std::cout << system_.str(0.0, 1.0) << "\n";
     }
     std::cout << "hello world\n";
 }
